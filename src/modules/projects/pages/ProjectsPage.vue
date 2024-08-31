@@ -22,13 +22,29 @@
       </tbody>
     </table>
   </div>
-  <AddButton position="bottom-right" @click="() => console.log('clicked')">
+  <AddButton position="bottom-right" @click="clickedButton = true">
     <addIcon></addIcon>
   </AddButton>
+
+  <InputModal
+    :open="clickedButton"
+    @close="clickedButton = false"
+    @value="onNewValue($event)"
+    title="Ingresa el nombre de tu proyecto"
+  ></InputModal>
 </template>
 
 <script lang="ts" setup>
 import AddButton from '@/modules/common/components/AddButton.vue';
 
 import addIcon from '@/modules/common/components/icons/addIcon.vue';
+
+import InputModal from '@/modules/common/components/InputModal.vue';
+import { ref } from 'vue';
+
+const clickedButton = ref(false);
+
+const onNewValue = (projectName: string) => {
+  console.log({ newValue: projectName });
+};
 </script>
