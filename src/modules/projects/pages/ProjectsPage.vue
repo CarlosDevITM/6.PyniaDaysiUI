@@ -68,8 +68,12 @@ import InputModal from '@/modules/common/components/InputModal.vue';
 import { ref } from 'vue';
 
 import CustomModal from '@/modules/common/components/CustomModal.vue';
+import { useProjectStore } from '../stores/projectStore';
 const clickedButton = ref(false);
 const modalSlotOpen = ref(false);
+
+//PINIA
+const projectStore = useProjectStore();
 
 const onNewValue = (projectName: string) => {
   console.log({ newValue: projectName });
