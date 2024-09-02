@@ -5,7 +5,7 @@
       <!-- head -->
       <thead>
         <tr>
-          <th></th>
+          <th>#</th>
           <th>Project</th>
           <th>Tasks</th>
           <th>Progress</th>
@@ -13,11 +13,13 @@
       </thead>
       <tbody>
         <!-- Rows -->
-        <tr class="hover">
-          <th>2</th>
-          <td>Hart Hagerty</td>
-          <td>Desktop Support Technician</td>
-          <td>Purple</td>
+        <!--Using Pinia-->
+        <tr v-for="(project, index) in projectStore.projectList" :key="project.id" class="hover">
+          <th>{{ index + 1 }}</th>
+          <td>{{ project.name }}</td>
+          <td>{{ project.tasks.length }}</td>
+          <!--Progress BAR from DaisyUI-->
+          <td><progress class="progress progress-success w-56" value="10" max="100"></progress></td>
         </tr>
       </tbody>
     </table>
@@ -33,7 +35,7 @@
   <InputModal
     :open="clickedButton"
     @close="clickedButton = false"
-    @value="onNewValue($event)"
+    @value="projectStore.addProject($event)"
     title="Ingresa el nombre de tu proyecto"
   ></InputModal>
 
@@ -74,8 +76,4 @@ const modalSlotOpen = ref(false);
 
 //PINIA
 const projectStore = useProjectStore();
-
-const onNewValue = (projectName: string) => {
-  console.log({ newValue: projectName });
-};
 </script>
