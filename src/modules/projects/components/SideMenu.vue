@@ -11,17 +11,19 @@
     <!-- If there are-->
     <ul v-else class="menu">
       <li v-for="project in projectStore.projectList" :key="project.id">
+        <!-- If there are tasks.-->
         <template v-if="project.tasks.length > 0">
           <details>
             <!-- Project's name if there´s tasks.-->
             <summary>
-              <RouterLink :to="`/project/${project.id}`">
+              <RouterLink :to="`/projects/${project.id}`">
                 {{ project.name }}
               </RouterLink>
             </summary>
             <ul>
+              <!-- Show tasks in a list.-->
               <li v-for="task in project.tasks" :key="task.id">
-                <RouterLink :to="`/project/${project.id}`">{{ task.name }}</RouterLink>
+                <RouterLink :to="`/projects/${project.id}`">{{ task.name }}</RouterLink>
               </li>
             </ul>
           </details>
@@ -29,7 +31,7 @@
 
         <!-- If there´s no tasks-->
         <template v-else>
-          <RouterLink :to="`/project/${project.id}`">
+          <RouterLink :to="`/projects/${project.id}`">
             {{ project.name }}
           </RouterLink>
         </template>
