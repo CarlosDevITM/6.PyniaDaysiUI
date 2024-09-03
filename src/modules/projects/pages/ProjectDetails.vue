@@ -18,20 +18,23 @@
           </thead>
           <tbody>
             <!-- row 2 -->
-            <tr class="hover">
-              <td>Si</td>
-              <td>
-                <input
-                  type="text"
-                  class="input input-primary w-full opacity-60 transition-all"
-                  placeholder="Ingresa una nueva tarea"
-                />
-              </td>
-              <td>Completada</td>
+            <tr v-for="(task, index) in project?.tasks" :key="task.id" class="hover">
+              <td>{{ index + 1 }}</td>
+              <td>{{ task.name }}</td>
             </tr>
           </tbody>
         </table>
       </div>
+    </section>
+
+    <section>
+      <input
+        type="text"
+        class="input input-primary w-full opacity-60 transition-all"
+        placeholder="Ingresa una nueva tarea"
+        @keyup.enter="addTask"
+        v-model="taskText"
+      />
     </section>
   </div>
 </template>
@@ -51,8 +54,17 @@ const props = defineProps<Props>();
 const projectStore = useProjectStore();
 const project = ref<Project | null>();
 
+//INPUT VALUE
+const taskText = ref('');
+
 //Observar si el link de la página es cambiado.
 
+const addTask = () => {
+  if (!project.value) return;
+  projectStore.addTask(project.value.id, taskText.value);
+  //Limpiar caja de texto.
+  taskText.value = '';
+};
 watch(
   () => props.id,
   () => {

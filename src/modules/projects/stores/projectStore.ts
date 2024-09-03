@@ -19,6 +19,21 @@ export const useProjectStore = defineStore('projects', () => {
     });
   };
 
+  //Local storage
+  // const tasks = ref(useLocalStorage<Task[]>('tasks', []));
+
+  const addTask = (projectId: string, taskName: string) => {
+    if (taskName.length === 0) return;
+
+    const project = projects.value.find((p) => p.id === projectId);
+    if (!project) return;
+
+    project.tasks.push({
+      id: uuidv4(),
+      name: taskName,
+    });
+  };
+
   return {
     //Properties
     projects,
@@ -29,5 +44,6 @@ export const useProjectStore = defineStore('projects', () => {
 
     //Functions
     addProject,
+    addTask,
   };
 });
