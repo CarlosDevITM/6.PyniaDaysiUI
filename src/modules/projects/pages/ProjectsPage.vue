@@ -14,12 +14,23 @@
       <tbody>
         <!-- Rows -->
         <!--Using Pinia-->
-        <tr v-for="(project, index) in projectStore.projectList" :key="project.id" class="hover">
+        <tr
+          v-for="(project, index) in projectStore.progressTaskBar"
+          :key="project.id"
+          class="hover"
+        >
           <th>{{ index + 1 }}</th>
           <td>{{ project.name }}</td>
-          <td>{{ project.tasks.length }}</td>
+          <td>{{ project.taskCount }}</td>
           <!--Progress BAR from DaisyUI-->
-          <td><progress class="progress progress-success w-56" value="10" max="100"></progress></td>
+          <td>
+            <progress
+              class="progress progress-success w-56"
+              :value="project.completition"
+              max="100"
+            ></progress>
+          </td>
+          <td>{{ project.completition }}</td>
         </tr>
       </tbody>
     </table>

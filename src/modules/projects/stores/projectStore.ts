@@ -34,6 +34,17 @@ export const useProjectStore = defineStore('projects', () => {
     });
   };
 
+  //Toggle TASKS
+  const toggleTasks = (projectId: string, taskId: string) => {
+    const project = projects.value.find((p) => p.id === projectId);
+
+    if (!project) return;
+
+    const task = project.tasks.find((t) => t.id === taskId);
+    if (!task) return;
+
+    task.completedAt = task.completedAt ? undefined : new Date();
+  };
   return {
     //Properties
     projects,
@@ -42,8 +53,24 @@ export const useProjectStore = defineStore('projects', () => {
     projectList: computed(() => [...projects.value]),
     noProjects: computed(() => projects.value.length === 0),
 
+    progressTaskBar: computed(() => {
+      return projects.value.map((projects) => {
+        const total = projects.tasks.length;
+        const completed = projects.tasks.filter((t) => t.completedAt).length;
+        const completion = total === 0 ? 0 : (completed / total) * 100;
+
+        return {
+          id: projects.id,
+          name: projects.name,
+          completition: Math.round(completion),
+          taskCount: total,
+        };
+      });
+    }),
+
     //Functions
     addProject,
     addTask,
+    toggleTasks,
   };
 });

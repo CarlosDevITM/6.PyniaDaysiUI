@@ -18,9 +18,19 @@
           </thead>
           <tbody>
             <!-- row 2 -->
-            <tr v-for="(task, index) in project?.tasks" :key="task.id" class="hover">
-              <td>{{ index + 1 }}</td>
+            <tr v-for="task in project?.tasks" :key="task.id" class="hover">
+              <!-- Checkbox to check tasks-->
+              <td>
+                <input
+                  type="checkbox"
+                  :checked="!!task.completedAt"
+                  class="checkbox checkbox-primary"
+                  @change="projectStore.toggleTasks(project?.id ?? '', task.id)"
+                />
+              </td>
+
               <td>{{ task.name }}</td>
+              <td>{{ task.completedAt }}</td>
             </tr>
           </tbody>
         </table>
